@@ -1,7 +1,11 @@
 import urllib2
+from urllib2 import HTTPError
 from urlparse import urlparse
 from optparse import OptionParser
 from ipaddress import ip_address, AddressValueError
+import shlex
+import subprocess
+import getpass
 
 PROXY_TYPE_HTTP = "http"
 PROXY_TYPE_SOCKS = "socks5"
@@ -88,8 +92,13 @@ def get_url_data(url):
     try:
         ret = urllib2.urlopen(url).read()
         return ret
-    except Exception as e:
+    except HTTPError as e:
+        print e.code
         return -1
+
+
+def create_tunnel():
+    pass
 
 
 if __name__ == '__main__':
