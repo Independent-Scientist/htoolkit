@@ -18,19 +18,27 @@ class FunctorManager(object):
         result = None
 
         try:
+            fnctr.meta()
+        except FunctorImplException as e:
+            print e.message
+            return
+
+        try:
             fnctr.initialize(*args, **kwargs)
         except FunctorImplException as e:
             print e.message
-
+            return
         try:
             result = fnctr.perform()
         except Exception as e:
             print e.message
+            return
 
         try:
             fnctr.finalize()
         except Exception as e:
             print e.message
+            return
 
         return result
 
